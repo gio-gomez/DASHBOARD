@@ -580,12 +580,3 @@ header p {
     padding: 1.5rem;
     min-height: 300px;
   }
-}
-
-@media screen and (max-width: 768px) {
-  body { overflow-x: hidden; }
-  .main-content { margin-left: 0 !important; padding: 1rem !important; }
-  .charts-grid-2, .kpi-grid, .maps-container { grid-template-columns: 1fr !important; }
-  .chart-card, .map-card { width: 100% !important; min-height: auto !important; }
-  .boxplot-custom-container { height: 250px !important; padding-left: 2.5rem !important; }
-}
