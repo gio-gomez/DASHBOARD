@@ -569,3 +569,44 @@ header p {
     padding: 1.5rem;
     min-height: 300px;
   }
+/* =========================================
+   REGLAS EXCLUSIVAS PARA CELULARES
+   ========================================= */
+@media screen and (max-width: 768px) {
+  
+  /* 1. Evitar que TODO se salga por los lados */
+  body, html {
+    overflow-x: hidden !important; /* Bloquea el scroll horizontal */
+    width: 100%;
+  }
+  
+  .main-content {
+    padding: 10px !important; /* Reduce los márgenes grandotes de la laptop */
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .chart-card {
+    width: 100% !important;
+    max-width: 100% !important; /* Obliga a la tarjeta a encogerse al tamaño del cel */
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* 2. Forzar altura a las gráficas para que no se apachurren */
+  .chart-container {
+    height: 380px !important; /* El !important le gana al HTML */
+    margin-top: 1.5rem !important;
+  }
+
+  .boxplot-custom-container {
+    height: 100% !important; 
+    padding: 2.5rem 0 3rem 2.5rem !important; /* Espacio perfecto para celular */
+  }
+
+  .boxplot-y-axis {
+    top: 2.5rem !important;
+    bottom: 3rem !important;
+  }
+}
