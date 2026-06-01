@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard ODS 8 - México</title>
+  
+  <!-- Font and Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Leaflet CSS for Map -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" 
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Leaflet JS for Map -->
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" 
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">8</div>
+      <div class="brand-name">ODS 8 México</div>
+    </div>
+    
+    <nav class="nav-menu">
+      <li class="nav-item">
+        <a href="#" class="nav-link active" onclick="switchDashboard(1)">
+          <!-- Icon Chart -->
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Ingreso Medio
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link" onclick="switchDashboard(2)">
+          <!-- Icon Users -->
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 005.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          Tasa Desocupación
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link" onclick="switchDashboard(3)">
+          <!-- Icon Map -->
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+          </svg>
+          Mapas y Relación
+        </a>
+      </li>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <p>Trabajo Decente y Crecimiento Económico</p>
+      <p style="margin-top: 0.25rem; font-size: 0.75rem;">INEGI / ODS 2026</p>
+    </div>
+  </aside>
+  <!-- Main Content Area -->
+  <main class="main-content">
+    
+    <!-- Header -->
+    <header>
+      <div>
+        <h1 id="dashboard-title">Dashboard 1: Ingreso Medio por Hora</h1>
+        <p id="dashboard-desc">Análisis de remuneración horaria promedio de la población ocupada en México (2016-2024)</p>
+      </div>
+      
+      <!-- Interactive Year Selector -->
+      <div class="control-bar" id="year-control-bar">
+        <div class="control-group">
+          <label for="year-select">Seleccionar Año</label>
+          <select id="year-select" class="select-custom" onchange="handleYearChange()">
+            <!-- Loaded dynamically in JS -->
+          </select>
+        </div>
+      </div>
+    </header>
+    <!-- DASHBOARD PANEL 1: INGRESO MEDIO -->
+    <div id="panel-1" class="dashboard-panel active">
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-title">Ingreso Medio Total</div>
+          <div class="kpi-value" id="d1-kpi-total">$0.00</div>
+          <div class="kpi-sub">Pesos por hora (Promedio nacional)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Ingreso Medio Mujeres</div>
+          <div class="kpi-value" id="d1-kpi-mujeres" style="color: var(--accent-purple);">$0.00</div>
+          <div class="kpi-sub negative" id="d1-kpi-gap">Brecha de género de <span>0.00%</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Ingreso Medio Hombres</div>
+          <div class="kpi-value" id="d1-kpi-hombres" style="color: var(--accent-blue);">$0.00</div>
+          <div class="kpi-sub">Pesos por hora trabajada</div>
+        </div>
+      </div>
+      <!-- Charts Grid -->
+      <div class="charts-grid-2">
+        <!-- Boxplot: Ingreso medio por sexo -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-title-group">
+              <h3>Ingreso Medio por Sexo</h3>
+              <p>Distribución del ingreso horario promedio de hombres vs mujeres (2016-2024)</p>
+            </div>
+          </div>
+          <!-- Custom Beautiful HTML Boxplot -->
+          <div class="boxplot-custom-container">
+            <div class="boxplot-y-axis">
+              <span id="box-y-max">$60.00</span>
+              <span id="box-y-mid">$45.00</span>
+              <span id="box-y-min">$30.00</span>
+            </div>
+            
+            <!-- Box Hombres -->
+            <div class="boxplot-bar-wrapper">
+              <div class="boxplot-line-vert" id="box-hombres-line-vert"></div>
+              <div class="boxplot-line-horiz" id="box-hombres-line-top"></div>
+              <div class="boxplot-line-horiz" id="box-hombres-line-bottom"></div>
+              <div class="boxplot-body" id="box-hombres-body">
+                <div class="boxplot-median-line" id="box-hombres-median"></div>
+              </div>
+              <div class="boxplot-label">Hombres</div>
+              <!-- Tooltip -->
+              <div class="boxplot-stats-tooltip" id="box-hombres-tooltip">
+                <div class="boxplot-tooltip-row"><span>Máx:</span><span id="bhombres-max">$0.00</span></div>
+                <div class="boxplot-tooltip-row"><span>Q3:</span><span id="bhombres-q3">$0.00</span></div>
+                <div class="boxplot-tooltip-row"><span>Mediana:</span><span id="bhombres-med">$0.00</span></div>
+                <div class="boxplot-tooltip-row"><span>Q1:</span><span id="bhombres-q1">$0.00</span></div>
+                <div class="boxplot-tooltip-row"><span>Mín:</span><span id="bhombres-min">$0.00</span></div>
+              </div>
+            </div>
+            <!-- Box Mujeres -->
+            <div class="boxplot-bar-wrapper">
+              <div class="boxplot-line-vert" id="box-mujeres-line-vert"></div>
+              <div class="boxplot-line-horiz" id="box-mujeres-line-top"></div>
+              <div class="boxplot-line-horiz" id="box-mujeres-line-bottom"></div>
+              <div class="boxplot-body" id="box-mujeres-body" style="border-color: var(--accent-purple); background: linear-gradient(to bottom, rgba(192, 132, 252, 0.3), rgba(251, 113, 133, 0.3));">
+                <div class="boxplot-median-line" id="box-mujeres-median"></div>
+              </div>
+              <div class="boxplot-label">Mujeres</div>
+              <!-- Tooltip -->
+              <div class="boxplot-stats-tooltip" id="box-mujeres-tooltip">
+                <div class="boxplot-tooltip-row"><span>Máx:</span><span id="bmujeres-max">$0.00</span></div>
+                <div class="boxplot-tooltip-row"><span>Q3:</span><span id="bmujeres-q3">$0.00</span></div>
+                <div class="boxplot-tooltip-row"><span>Mediana:</span><span id="bmujeres-med">$0.00</span></div>
+                <div class="boxplot-tooltip-row"><span>Q1:</span><span id="bmujeres-q1">$0.00</span></div>
+                <div class="boxplot-tooltip-row"><span>Mín:</span><span id="bmujeres-min">$0.00</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Radar Chart: Ingreso medio por grupo de edad -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-title-group">
+              <h3>Ingreso Medio por Grupo de Edad</h3>
+              <p>Estructura de ingresos por tramos generacionales</p>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-radar-edad"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- Large Chart Panel: Ocupaciones -->
+      <div class="charts-grid-large">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-title-group">
+              <h3>Ingreso Medio por Tipo de Empleo (Ocupación)</h3>
+              <p>Comparativa de ingresos horarios promedio según el clasificador nacional de ocupaciones</p>
+            </div>
+          </div>
+          <div class="chart-container" style="height: 380px;">
+            <canvas id="chart-bar-ocupaciones"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- DASHBOARD PANEL 2: TASA DESOCUPACION -->
+    <div id="panel-2" class="dashboard-panel">
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-title">Desocupación 2006 (Inicial)</div>
+          <div class="kpi-value" id="d2-kpi-2006">0.00%</div>
+          <div class="kpi-sub">Promedio nacional de desocupación</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Desocupación Último Año (2024)</div>
+          <div class="kpi-value" id="d2-kpi-2024">0.00%</div>
+          <div class="kpi-sub positive" id="d2-kpi-change">Cambio acumulado de <span>-0.00%</span></div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Estado con Menor Desocupación</div>
+          <div class="kpi-value" id="d2-kpi-min-state" style="font-size: 1.6rem; padding: 0.35rem 0;">Cargando...</div>
+          <div class="kpi-sub" id="d2-kpi-min-val">Tasa de desocupación: 0.00%</div>
+        </div>
+      </div>
+      <!-- Charts Grid 1 -->
+      <div class="charts-grid-2">
+        <!-- Boxplot: Tasa desocupación 2006 vs 2024 -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-title-group">
+              <h3>Dispersión de Desocupación Estatal: 2006 vs 2024</h3>
+              <p>Rango y cuartiles de la tasa de desocupación en los 32 estados de México</p>
+            </div>
+          </div>
+          <!-- Custom Beautiful HTML Boxplot -->
+          <div class="boxplot-custom-container">
+            <div class="boxplot-y-axis">
+              <span id="box2-y-max">8.0%</span>
+              <span id="box2-y-mid">4.0%</span>
+              <span id="box2-y-min">0.0%</span>
+            </div>
+            
+            <!-- Box 2006 -->
+            <div class="boxplot-bar-wrapper">
+              <div class="boxplot-line-vert" id="box-2006-line-vert"></div>
+              <div class="boxplot-line-horiz" id="box-2006-line-top"></div>
+              <div class="boxplot-line-horiz" id="box-2006-line-bottom"></div>
+              <div class="boxplot-body" id="box-2006-body" style="border-color: var(--accent-rose); background: linear-gradient(to bottom, rgba(251, 113, 133, 0.3), rgba(244, 63, 94, 0.1));">
+                <div class="boxplot-median-line" id="box-2006-median" style="background-color: var(--text-primary);"></div>
+              </div>
+              <div class="boxplot-label">2006</div>
+              <!-- Tooltip -->
+              <div class="boxplot-stats-tooltip" id="box-2006-tooltip">
+                <div class="boxplot-tooltip-row"><span>Máx:</span><span id="b2006-max">0.00%</span></div>
+                <div class="boxplot-tooltip-row"><span>Q3:</span><span id="b2006-q3">0.00%</span></div>
+                <div class="boxplot-tooltip-row"><span>Mediana:</span><span id="b2006-med">0.00%</span></div>
+                <div class="boxplot-tooltip-row"><span>Q1:</span><span id="b2006-q1">0.00%</span></div>
+                <div class="boxplot-tooltip-row"><span>Mín:</span><span id="b2006-min">0.00%</span></div>
+              </div>
+            </div>
+            <!-- Box 2024 -->
+            <div class="boxplot-bar-wrapper">
+              <div class="boxplot-line-vert" id="box-2024-line-vert"></div>
+              <div class="boxplot-line-horiz" id="box-2024-line-top"></div>
+              <div class="boxplot-line-horiz" id="box-2024-line-bottom"></div>
+              <div class="boxplot-body" id="box-2024-body" style="border-color: var(--accent-emerald); background: linear-gradient(to bottom, rgba(52, 211, 153, 0.3), rgba(16, 185, 129, 0.1));">
+                <div class="boxplot-median-line" id="box-2024-median" style="background-color: var(--text-primary);"></div>
+              </div>
+              <div class="boxplot-label">2024</div>
+              <!-- Tooltip -->
+              <div class="boxplot-stats-tooltip" id="box-2024-tooltip">
+                <div class="boxplot-tooltip-row"><span>Máx:</span><span id="b2024-max">0.00%</span></div>
+                <div class="boxplot-tooltip-row"><span>Q3:</span><span id="b2024-q3">0.00%</span></div>
+                <div class="boxplot-tooltip-row"><span>Mediana:</span><span id="b2024-med">0.00%</span></div>
+                <div class="boxplot-tooltip-row"><span>Q1:</span><span id="b2024-q1">0.00%</span></div>
+                <div class="boxplot-tooltip-row"><span>Mín:</span><span id="b2024-min">0.00%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Interactive Line Chart & Histogram over Time -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-title-group">
+              <h3>Tendencia e Histograma de Desocupación</h3>
+              <p>Comportamiento de desocupación a lo largo del tiempo por entidad</p>
+            </div>
+            <!-- Custom Sub Selector -->
+            <select id="state-trend-select" class="select-custom" onchange="handleStateTrendChange()" style="padding: 0.45rem 2rem 0.45rem 1rem; font-size: 0.8rem;">
+              <!-- Loaded dynamically -->
+            </select>
+          </div>
+          <div class="chart-container">
+            <canvas id="chart-line-trend"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- Large Comparative Bar Chart: State comparison 2006 vs 2024 -->
+      <div class="charts-grid-large">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-title-group">
+              <h3>Tasa de Desocupación por Estado: 2006 vs 2024</h3>
+              <p>Comparación directa estado por estado del nivel de desocupación entre el año inicial y el último del dataset (ordenado por tasa en 2024)</p>
+            </div>
+          </div>
+          <div class="chart-container" style="height: 400px;">
+            <canvas id="chart-bar-estados-comparacion"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- DASHBOARD PANEL 3: MAPAS Y RELACION -->
+    <div id="panel-3" class="dashboard-panel">
+      <!-- Map grid: Income Heatmap vs Unemployment Heatmap -->
+      <div class="maps-container">
+        <!-- Income Map -->
+        <div class="map-card">
+          <div class="chart-card-header">
+            <div class="chart-title-group">
+              <h3>Mapa de Calor: Ingreso Medio</h3>
+              <p>Ingreso promedio por hora estimado por entidad federativa (pesos)</p>
+            </div>
+          </div>
+          <div class="map-container" id="map-income"></div>
+          <div class="map-legend">
+            <span>Menor ($)</span>
+            <div class="legend-bar income"></div>
+            <span>Mayor ($$)</span>
+          </div>
+        </div>
+        <!-- Unemployment Map -->
+        <div class="map-card">
+          <div class="chart-card-header">
+            <div class="chart-title-group">
+              <h3>Mapa de Calor: Desocupación</h3>
+              <p>Tasa de desocupación de la población económicamente activa por entidad (%)</p>
+            </div>
+          </div>
+          <div class="map-container" id="map-unemployment"></div>
+          <div class="map-legend">
+            <span>Baja (%)</span>
+            <div class="legend-bar unemployment"></div>
+            <span>Alta (%)</span>
+          </div>
+        </div>
+      </div>
+      <!-- Scatter Plot Grid -->
+      <div class="charts-grid-large">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div class="chart-title-group">
+              <h3>Relación entre Ingreso Medio y Tasa de Desocupación</h3>
+              <p>Gráfico de dispersión por estado. Permite visualizar si existe correlación entre mayores ingresos y niveles de desempleo en cada entidad</p>
+            </div>
+          </div>
+          <div class="chart-container" style="height: 420px;">
+            <canvas id="chart-scatter-relation"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Loader Script -->
+  <script src="app.js"></script>
+</body>
+</html> 
+
