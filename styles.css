@@ -2,25 +2,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 :root {
   --font-sans: 'Outfit', sans-serif;
-
+  
   /* Color Palette - Light Mode Primary */
   --bg-primary: #f8fafc;        /* Fondo gris muy claro para la página */
   --bg-secondary: #ffffff;      /* Fondo blanco puro para la barra lateral y controles */
   --bg-card: rgba(255, 255, 255, 0.85); /* Tarjetas blancas semi-transparentes */
   --border-color: rgba(0, 0, 0, 0.08); /* Bordes grises muy tenues */
-
+  
   /* Accent Colors - Tu Paleta #2 */
   --accent-blue: #5cb2af;       /* Verde/Azul vibrante */
-  --accent-purple: #f76e6e;     /* Coral/Rojo */
+  --accent-purple: #f76e6e;    /* Coral/Rojo */
   --accent-emerald: #7dd8c3;    /* Verde claro */
   --accent-rose: #fbd7a7;       /* Arena */
   --accent-amber: #3b7e9b;      /* Azul oscuro */
-
+  
   /* Text Colors - Modo Claro */
   --text-primary: #1e293b;      /* Gris muy oscuro casi negro */
   --text-secondary: #475569;    /* Gris medio */
   --text-muted: #94a3b8;        /* Gris clarito */
-
+  
   /* Layout */
   --sidebar-width: 280px;
   --transition-speed: 0.3s;
@@ -307,9 +307,9 @@ header p {
 }
 .chart-container {
   position: relative;
+  flex-grow: 1;
   width: 100%;
-  height: 300px;
-  margin-top: 1.5rem; /* <- ¡Este margen salva a TODAS las gráficas! */
+  height: 350px;
 }
 /* Map Containers */
 .maps-container {
@@ -405,42 +405,35 @@ header p {
 /* Custom CSS Boxplot Styling */
 .boxplot-custom-container {
   display: flex;
-  justify-content: space-evenly; /* <- Centra perfectamente las dos barras */
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: flex-end;
   height: 100%;
-  height: 350px; /* <- ¡Esto forzará que se estire verticalmente! */
+  padding: 3rem 0 2rem 0; /* <- 3rem arriba, 2rem abajo */
+  padding: 4.5rem 0 2rem 0; /* <- 4.5rem para salvar las caídas de texto en celular */
   width: 100%;
-  padding: 0 0 2.5rem 3rem; /* <- Arriba 0, Der 0, Abajo 2.5rem, Izq 3rem */
-  padding: 3rem 0 3rem 3.5rem; /* Arriba 3rem, Der 0, Abajo 3rem, Izq 3.5rem */
-  position: relative;
+  position: relative; 
 }
 .boxplot-bar-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
-  width: 70px;      /* <- ¡Mucho más delgadas para que quepan en el celular! */
-  max-width: 40%;   /* <- Evita que desborden */
+  height: 100%; /* <- Usa el 100% del área limpia */
+  width: 150px;
   justify-content: flex-end;
-  width: 40px; /* <- ¡Dieta estricta! Más delgadas y estéticas */
   position: relative;
 }
 .boxplot-y-axis {
   position: absolute;
   left: 0;
-  top: 0;           
-  bottom: 2.5rem;   
-  width: 3rem;      /* <- Ocupa exactamente el espacio reservado */
-  top: 3rem;      /* <- Coincide con el techo del contenedor */
-  bottom: 3rem;   /* <- Coincide con el piso del contenedor */
-  width: 3.5rem;
+  top: 3rem;    /* <- Lo bajamos para que coincida con el techo de 3rem */
+  left: 0.8rem; /* <- Despega los números del borde izquierdo de la pantalla */
+  top: 4.5rem;  /* <- Lo baja para que el texto de arriba no lo aplaste */
+  bottom: 2rem; 
+  height: auto; 
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-end; /* <- Empuja el $60.00 hacia la rayita */
-  align-items: flex-end;
   padding-right: 0.5rem;
   font-size: 0.75rem;
   color: var(--text-muted);
@@ -465,12 +458,9 @@ header p {
 .boxplot-line-horiz {
   height: 2px;
   width: 30px;
-  width: 24px; /* <- Topes más cortitos para que no se salgan de proporción */
   background-color: var(--text-secondary);
   position: absolute;
   z-index: 2;
-  left: 50%;
-  transform: translateX(-50%);
 }
 .boxplot-median-line {
   height: 2px;
@@ -481,12 +471,12 @@ header p {
 }
 .boxplot-label {
   position: absolute;
-  bottom: -2rem;
+  bottom: -2.5rem; /* <- Lo bajamos un poco más */
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text-primary); /* <- Lo hacemos más oscurito para que resalte */
   white-space: nowrap;
 }
 .boxplot-stats-tooltip {
@@ -530,7 +520,6 @@ header p {
   body {
     flex-direction: column;
   }
-
   .sidebar {
     width: 100%;
     height: auto;
@@ -539,22 +528,18 @@ header p {
     border-bottom: 1px solid var(--border-color);
     padding: 1.5rem;
   }
-
   .brand {
     margin-bottom: 1.5rem;
   }
-
   .nav-menu {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-
   .main-content {
     margin-left: 0;
     padding: 1.5rem;
   }
-
   .control-bar {
     flex-direction: column;
     align-items: stretch;
@@ -565,18 +550,16 @@ header p {
   .control-bar {
     padding: 1rem;
   }
-
   .select-custom {
     padding: 0.65rem 1.5rem 0.65rem 1rem;
     background-position: right 0.75rem center;
     background-size: 0.75rem;
   }
-
   .kpi-value {
     font-size: 1.75rem;
   }
-
   .chart-card {
     padding: 1.5rem;
     min-height: 300px;
   }
+}
