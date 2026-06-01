@@ -408,9 +408,9 @@ header p {
   justify-content: space-around;
   align-items: flex-end;
   height: 100%;
-  padding: 2rem 0;
+  padding: 3rem 0 2rem 0; /* <- 3rem arriba, 2rem abajo */
   width: 100%;
-  position: relative; /* <- ¡Nuestra nueva ancla! */
+  position: relative; 
 }
 .boxplot-bar-wrapper {
   display: flex;
@@ -424,9 +424,9 @@ header p {
 .boxplot-y-axis {
   position: absolute;
   left: 0;
-  top: 2rem;    /* Empieza justo después del margen superior */
-  bottom: 2rem; /* Termina justo antes del margen inferior */
-  height: auto; /* Dejamos que top y bottom definan el tamaño perfecto */
+  top: 3rem;    /* <- Lo bajamos para que coincida con el techo de 3rem */
+  bottom: 2rem; 
+  height: auto; 
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
