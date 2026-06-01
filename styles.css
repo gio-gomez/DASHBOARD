@@ -569,3 +569,33 @@ header p {
     padding: 1.5rem;
     min-height: 300px;
   }
+/* =========================================
+   REGLAS DE SEGURIDAD PARA CELULARES
+   ========================================= */
+@media (max-width: 768px) {
+  
+  /* Forzamos que las tarjetas no se desborden */
+  .chart-card, .map-card {
+    min-width: 0 !important;
+    padding: 1rem !important;
+  }
+
+  /* El contenedor de los boxplots vuelve a su altura original pero en pixeles */
+  .boxplot-custom-container {
+    height: 300px !important; 
+    padding: 2rem 0 2rem 3rem !important;
+  }
+
+  /* Ajustamos el eje Y para que siempre quepa */
+  .boxplot-y-axis {
+    width: 2.5rem !important;
+    top: 2rem !important;
+    bottom: 2rem !important;
+  }
+
+  /* Aseguramos que el texto no se encime */
+  .chart-container {
+    height: 250px !important;
+    margin-top: 2rem !important;
+  }
+}
