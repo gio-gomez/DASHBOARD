@@ -423,8 +423,8 @@ header p {
 .boxplot-y-axis {
   position: absolute;
   left: 0;
-  top: 0;
-  height: 85%;
+  bottom: 2rem; /* Anclamos la base al mismo nivel exacto que las barras */
+  height: calc((100% - 4rem) * 0.85); /* Calculamos la escala exacta restando los márgenes */
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
