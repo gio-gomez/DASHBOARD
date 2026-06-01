@@ -408,7 +408,7 @@ header p {
   justify-content: space-around;
   align-items: flex-end;
   height: 100%;
-  padding: 3rem 0 2rem 0; /* <- 3rem arriba, 2rem abajo */
+  padding: 4.5rem 0 2rem 0; /* <- 4.5rem para salvar las caídas de texto en celular */
   width: 100%;
   position: relative; 
 }
@@ -423,8 +423,8 @@ header p {
 }
 .boxplot-y-axis {
   position: absolute;
-  left: 0;
-  top: 3rem;    /* <- Lo bajamos para que coincida con el techo de 3rem */
+  left: 0.8rem; /* <- Despega los números del borde izquierdo de la pantalla */
+  top: 4.5rem;  /* <- Lo baja para que el texto de arriba no lo aplaste */
   bottom: 2rem; 
   height: auto; 
   border-right: 1px solid var(--border-color);
