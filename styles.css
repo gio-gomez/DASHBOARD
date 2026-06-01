@@ -465,10 +465,14 @@ header p {
   z-index: 3;
 }
 .boxplot-label {
-  margin-top: 1rem;
+  position: absolute;
+  bottom: -1.8rem; /* <- Lo saca de la zona de la gráfica hacia abajo */
+  left: 50%;       /* <- Lo centra perfectamente de forma horizontal */
+  transform: translateX(-50%);
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-secondary);
+  white-space: nowrap; /* <- Evita que el texto se rompa en dos renglones */
 }
 .boxplot-stats-tooltip {
   display: none;
