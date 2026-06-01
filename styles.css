@@ -307,9 +307,9 @@ header p {
 }
 .chart-container {
   position: relative;
-  flex-grow: 1;
   width: 100%;
-  height: 350px;
+  height: 300px;
+  margin-top: 1.5rem; /* <- ¡Este margen salva a TODAS las gráficas! */
 }
 /* Map Containers */
 .maps-container {
@@ -405,32 +405,34 @@ header p {
 /* Custom CSS Boxplot Styling */
 .boxplot-custom-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly; /* <- Centra perfectamente las dos barras */
   align-items: flex-end;
   height: 100%;
-  padding: 4.5rem 0 2rem 0; /* <- 4.5rem para salvar las caídas de texto en celular */
   width: 100%;
-  position: relative; 
+  padding: 0 0 2.5rem 3rem; /* <- Arriba 0, Der 0, Abajo 2.5rem, Izq 3rem */
+  position: relative;
 }
 .boxplot-bar-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%; /* <- Usa el 100% del área limpia */
-  width: 150px;
+  height: 100%;
+  width: 70px;      /* <- ¡Mucho más delgadas para que quepan en el celular! */
+  max-width: 40%;   /* <- Evita que desborden */
   justify-content: flex-end;
   position: relative;
 }
 .boxplot-y-axis {
   position: absolute;
-  left: 0.8rem; /* <- Despega los números del borde izquierdo de la pantalla */
-  top: 4.5rem;  /* <- Lo baja para que el texto de arriba no lo aplaste */
-  bottom: 2rem; 
-  height: auto; 
+  left: 0;
+  top: 0;           
+  bottom: 2.5rem;   
+  width: 3rem;      /* <- Ocupa exactamente el espacio reservado */
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: flex-end; /* <- Empuja el $60.00 hacia la rayita */
   padding-right: 0.5rem;
   font-size: 0.75rem;
   color: var(--text-muted);
@@ -468,12 +470,12 @@ header p {
 }
 .boxplot-label {
   position: absolute;
-  bottom: -2.5rem; /* <- Lo bajamos un poco más */
+  bottom: -2rem;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: var(--text-primary); /* <- Lo hacemos más oscurito para que resalte */
+  color: var(--text-primary);
   white-space: nowrap;
 }
 .boxplot-stats-tooltip {
