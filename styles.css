@@ -550,48 +550,19 @@ header p {
     gap: 1rem;
   }
 }
+/* Correcciones Responsivas Finales */
+
 @media (max-width: 640px) {
-  .control-bar {
-    padding: 1rem;
-  }
-  
-  .select-custom {
-    padding: 0.65rem 1.5rem 0.65rem 1rem;
-    background-position: right 0.75rem center;
-    background-size: 0.75rem;
-  }
-  
-  .kpi-value {
-    font-size: 1.75rem;
-  }
-  
-  .chart-card {
-    padding: 1.5rem;
-    min-height: 300px;
-  }
-/* Corrección de Estabilidad Responsiva */
+  .control-bar { padding: 1rem; }
+  .select-custom { padding: 0.65rem 1.5rem 0.65rem 1rem; background-position: right 0.75rem center; background-size: 0.75rem; }
+  .kpi-value { font-size: 1.75rem; }
+  .chart-card { padding: 1.5rem; min-height: 300px; }
+}
+
 @media screen and (max-width: 768px) {
-  body {
-    overflow-x: hidden;
-  }
-
-  .main-content {
-    margin-left: 0 !important;
-    padding: 1rem !important;
-  }
-
-  .charts-grid-2, .kpi-grid, .maps-container {
-    grid-template-columns: 1fr !important;
-  }
-
-  .chart-card, .map-card {
-    width: 100% !important;
-    min-height: auto !important;
-  }
-
-  /* Ajuste preciso para los gráficos Boxplot */
-  .boxplot-custom-container {
-    height: 250px !important;
-    padding-left: 2.5rem !important;
-  }
+  body { overflow-x: hidden; }
+  .main-content { margin-left: 0 !important; padding: 1rem !important; }
+  .charts-grid-2, .kpi-grid, .maps-container { grid-template-columns: 1fr !important; }
+  .chart-card, .map-card { width: 100% !important; min-height: auto !important; }
+  .boxplot-custom-container { height: 250px !important; padding-left: 2.5rem !important; }
 }
