@@ -570,32 +570,49 @@ header p {
     min-height: 300px;
   }
 /* =========================================
-   REGLAS DE SEGURIDAD PARA CELULARES
+   SOLUCIÓN DEFINITIVA RESPONSIVA
    ========================================= */
+
 @media (max-width: 768px) {
-  
-  /* Forzamos que las tarjetas no se desborden */
-  .chart-card, .map-card {
-    min-width: 0 !important;
+  /* 1. Reset de layout para celulares */
+  body {
+    display: block !important; /* Cambiamos el flex a bloque para que el sidebar no estorbe */
+  }
+
+  .sidebar {
+    width: 100% !important;
+    height: auto !important;
+    position: relative !important;
     padding: 1rem !important;
   }
 
-  /* El contenedor de los boxplots vuelve a su altura original pero en pixeles */
-  .boxplot-custom-container {
-    height: 300px !important; 
-    padding: 2rem 0 2rem 3rem !important;
+  .main-content {
+    margin-left: 0 !important;
+    padding: 1rem !important;
+    width: 100% !important;
   }
 
-  /* Ajustamos el eje Y para que siempre quepa */
+  /* 2. Flexibilidad para las gráficas */
+  .chart-card, .map-card {
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 1rem !important;
+  }
+
+  .chart-container, .map-container {
+    height: 250px !important; /* Altura cómoda para ver en el celular */
+    width: 100% !important;
+  }
+
+  /* 3. Ajuste fino del boxplot (el culpable del desorden) */
+  .boxplot-custom-container {
+    height: 200px !important;
+    padding: 1.5rem 0 1.5rem 2.5rem !important;
+  }
+
   .boxplot-y-axis {
     width: 2.5rem !important;
-    top: 2rem !important;
-    bottom: 2rem !important;
-  }
-
-  /* Aseguramos que el texto no se encime */
-  .chart-container {
-    height: 250px !important;
-    margin-top: 2rem !important;
+    top: 1.5rem !important;
+    bottom: 1.5rem !important;
   }
 }
