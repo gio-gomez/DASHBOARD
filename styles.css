@@ -268,9 +268,10 @@ header p {
 }
 /* Grid Layouts for Charts */
 .charts-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  display: flex;       /* Cambiamos de grid a flex */
+  flex-direction: column; /* Apilamos todo verticalmente siempre */
   gap: 2rem;
+  width: 100%;
 }
 .charts-grid-large {
   display: grid;
@@ -287,8 +288,18 @@ header p {
   flex-direction: column;
   gap: 1.5rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  min-height: 400px;
-  height: 100%;
+  /* Cambiamos las alturas fijas por valores adaptables */
+  min-height: auto;
+  height: auto; 
+  width: 100%;
+}
+
+/* Regla especial para celulares: que las tarjetas no sean gigantes */
+@media (max-width: 768px) {
+  .chart-card {
+    padding: 1rem;
+    min-height: 300px; /* Tamaño decente para ver la gráfica */
+  }
 }
 .chart-card-header {
   display: flex;
@@ -407,10 +418,11 @@ header p {
   display: flex;
   justify-content: space-evenly;
   align-items: flex-end;
-  height: 350px; /* <- ¡Esto forzará que se estire verticalmente! */
+  height: 250px; /* Altura constante para que no se vea chaparro */
   width: 100%;
-  padding: 3rem 0 3rem 3.5rem; /* Arriba 3rem, Der 0, Abajo 3rem, Izq 3.5rem */
+  padding: 2rem 0 2rem 2.5rem;
   position: relative;
+  overflow: hidden; /* Esto evita que los números o líneas se salgan */
 }
 .boxplot-bar-wrapper {
   display: flex;
