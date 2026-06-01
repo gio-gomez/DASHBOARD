@@ -410,12 +410,13 @@ header p {
   height: 100%;
   padding: 2rem 0;
   width: 100%;
+  position: relative; /* <- ¡Nuestra nueva ancla! */
 }
 .boxplot-bar-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 85%; /* <- CAMBIO CLAVE: Ahora respeta el límite de los $60.00 */
+  height: 100%; /* <- Usa el 100% del área limpia */
   width: 150px;
   justify-content: flex-end;
   position: relative;
@@ -423,8 +424,9 @@ header p {
 .boxplot-y-axis {
   position: absolute;
   left: 0;
-  bottom: 2rem; /* Anclamos la base al mismo nivel exacto que las barras */
-  height: calc((100% - 4rem) * 0.85); /* Calculamos la escala exacta restando los márgenes */
+  top: 2rem;    /* Empieza justo después del margen superior */
+  bottom: 2rem; /* Termina justo antes del margen inferior */
+  height: auto; /* Dejamos que top y bottom definan el tamaño perfecto */
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
