@@ -415,7 +415,7 @@ header p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  height: 85%; /* <- CAMBIO CLAVE: Ahora respeta el límite de los $60.00 */
   width: 150px;
   justify-content: flex-end;
   position: relative;
@@ -466,13 +466,13 @@ header p {
 }
 .boxplot-label {
   position: absolute;
-  bottom: -1.8rem; /* <- Lo saca de la zona de la gráfica hacia abajo */
-  left: 50%;       /* <- Lo centra perfectamente de forma horizontal */
+  bottom: -2.5rem; /* <- Lo bajamos un poco más */
+  left: 50%;
   transform: translateX(-50%);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text-secondary);
-  white-space: nowrap; /* <- Evita que el texto se rompa en dos renglones */
+  color: var(--text-primary); /* <- Lo hacemos más oscurito para que resalte */
+  white-space: nowrap;
 }
 .boxplot-stats-tooltip {
   display: none;

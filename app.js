@@ -233,8 +233,9 @@ function renderDashboard1() {
           angleLines: { color: chartColors.grid },
           ticks: {
             color: chartColors.muted,
-            backdropColor: 'transparent',
-            font: { family: getStyleVal('--font-sans') }
+            backdropColor: 'rgba(255, 255, 255, 0.85)', /* <- Fondo blanco semi-transparente */
+            backdropPadding: 3, /* <- Le damos espacio para que respire el texto */
+            font: { family: getStyleVal('--font-sans'), weight: '500' }
           },
           pointLabels: {
             color: chartColors.text,
